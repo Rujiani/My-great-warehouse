@@ -1,5 +1,6 @@
 find_package(Catch2)
 
-add_executable(tests test.cpp)
+add_executable(tests test.cpp ../products/product.cpp ../products/retail_product.cpp)
+target_link_libraries(tests Catch2::Catch2WithMain gcov)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage -std=c++20")
+target_compile_options(tests PRIVATE --coverage -std=c++20 -Wall -Wextra)
