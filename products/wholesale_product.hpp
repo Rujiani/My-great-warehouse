@@ -4,6 +4,8 @@
 #include "product.hpp"
 namespace mgw {
 
+class retail_product;
+
 class wholesale_product : public product{
     private:
     size_t wholesale_size;
@@ -18,6 +20,8 @@ class wholesale_product : public product{
 
     size_t sell(size_t amount) override;
     void add_to_storage(size_t amount) override{quantity += amount * wholesale_size;}
+
+    retail_product change_to_retail(float allowance);
 };
 
 }

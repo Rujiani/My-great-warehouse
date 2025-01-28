@@ -6,13 +6,15 @@
 
 namespace mgw {
 
+class wholesale_product;
+
 class retail_product : public product{
     float allowance;
     public:
 
     retail_product():product{"retail"}, allowance{}{}
     
-    retail_product(size_t q, float c, string n, string f, string cn, size_t a):
+    retail_product(size_t q, size_t c, string n, string f, string cn, size_t a):
     product("retail", q, c, n, f, cn), allowance(a){
         if(allowance > 100)
             throw std::invalid_argument("Error: Allowance сan't exceed one hundred");
@@ -32,6 +34,7 @@ class retail_product : public product{
 
     size_t sell(size_t num) override;
 
+    wholesale_product change_to_wholesale(size_t wholesale_size);
 };
 
 }

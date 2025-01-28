@@ -95,3 +95,37 @@ TEST_CASE("WholesaleProduct: add_to_storage") {
     wp.add_to_storage(3); 
     REQUIRE(wp.get_quantity() == 35);
 }
+
+TEST_CASE("Retail to Wholesale Conversion") {
+    // Create a retail product
+    mgw::retail_product rp(100, 10.0f, "Widget", "ACME", "USA", 20);
+
+    SECTION("Valid conversion to wholesale") {
+        size_t wholesale_size = 5;
+        mgw::wholesale_product wp = rp.change_to_wholesale(wholesale_size);
+
+        // Check wholesale product properties
+        REQUIRE(wp.get_quantity() == rp.get_quantity());
+        REQUIRE(wp.get_type() == "wholesale");
+
+        // Wholesale-specific check
+        REQUIRE(wp.get_wholesale_size() == wholesale_size); // Assuming there's a getter for wholesale_size
+    }
+}
+
+TEST_CASE("Wholesale to Retail Conversion") {
+    // Create a wholesale product
+    mgw::wholesale_product wp(50, 15.0f, "BulkWidget", "ACME", "USA", 10);
+
+    SECTION("Valid conversion to retail") {
+        float allowance = 25.0f;
+        mgw::retail_product rp = wp.change_to_retail(allowance);
+
+        // Check retail product properties
+        REQUIRE(rp.get_quantity() == wp.get_quantity());
+        REQUIRE(rp.get_type() == "retail");
+
+        // Retail-specific check
+        REQUIRE(rp.get_allowance() == allowance); // Assuming there's a getter for allowance
+    }
+}

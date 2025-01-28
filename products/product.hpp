@@ -15,7 +15,6 @@ class product{
     protected:
     size_t quantity;
     size_t cost;
-    private:
     const string name, firm, country, type;
     public:
     product(string tp = ""):quantity{}, cost{}, name{}, firm{}, country{}, type{tp}{};
