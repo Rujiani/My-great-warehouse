@@ -6,7 +6,7 @@ namespace mgw {
         return wholesale_product(quantity, cost, name, firm, country, wholesale_size);
     }
 
-    retail_product wholesale_product::change_to_retail(float allowance){
+    retail_product wholesale_product::change_to_retail(size_t allowance){
         return retail_product(quantity, cost, name, firm, country, allowance);
     }
 }

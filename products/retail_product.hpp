@@ -9,7 +9,7 @@ namespace mgw {
 class wholesale_product;
 
 class retail_product : public product{
-    float allowance;
+    size_t allowance;
     public:
 
     retail_product():product{"retail"}, allowance{}{}
@@ -20,13 +20,13 @@ class retail_product : public product{
             throw std::invalid_argument("Error: Allowance сan't exceed one hundred");
     }
 
-    void set_allowance(float newAl){
+    void set_allowance(size_t newAl){
         if(newAl > 100) 
             throw std::invalid_argument("Error: Allowance сan't exceed one hundred");
         allowance = newAl;
     }
 
-    float get_allowance() const{return allowance;}
+    size_t get_allowance() const{return allowance;}
 
     void add_to_storage(size_t num) override{
         quantity += num;
@@ -35,6 +35,8 @@ class retail_product : public product{
     size_t sell(size_t num) override;
 
     wholesale_product change_to_wholesale(size_t wholesale_size);
+
+    string get_Info()const override;
 };
 
 }
