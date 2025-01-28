@@ -7,5 +7,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 add_subdirectory(products)
 add_subdirectory(test)
 
-target_link_libraries(tests retail_product)
+target_link_libraries(tests retail_product wholesale_product)
 

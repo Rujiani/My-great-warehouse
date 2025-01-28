@@ -3,11 +3,11 @@
 
 namespace mgw {
 
-float retail_product::sell(size_t num){
+size_t retail_product::sell(size_t num){
     if(get_quantity() < num)
         throw std::invalid_argument("Error: Insufficient quantity");
     quantity -= num;
-    return static_cast<float>(num) * (cost * allowance * 0.01);
+    return num * static_cast<size_t>(static_cast<float>(cost) * allowance * 0.01);
 }
 
 }

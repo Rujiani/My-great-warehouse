@@ -7,30 +7,30 @@
 namespace mgw {
 
 class retail_product : public product{
-    size_t allowance;
+    float allowance;
     public:
 
-    retail_product():product{"retail_product"}, allowance{}{}
+    retail_product():product{"retail"}, allowance{}{}
     
-    retail_product(size_t q, float c, string n, string f, string cn, ssize_t a):
-    product("retail_product", q, c, n, f, cn), allowance(a){
+    retail_product(size_t q, float c, string n, string f, string cn, size_t a):
+    product("retail", q, c, n, f, cn), allowance(a){
         if(allowance > 100)
             throw std::invalid_argument("Error: Allowance сan't exceed one hundred");
     }
 
-    void set_allowance(size_t newAl){
+    void set_allowance(float newAl){
         if(newAl > 100) 
             throw std::invalid_argument("Error: Allowance сan't exceed one hundred");
         allowance = newAl;
     }
 
-    size_t get_allowance() const{return allowance;}
+    float get_allowance() const{return allowance;}
 
     void add_to_storage(size_t num) override{
         quantity += num;
     }
 
-    float sell(size_t num) override;
+    size_t sell(size_t num) override;
 
 };
 

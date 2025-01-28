@@ -14,11 +14,11 @@ namespace mgw {
 class product{
     protected:
     size_t quantity;
-    float cost;
+    size_t cost;
     private:
     const string name, firm, country, type;
     public:
-    product(string tp = ""):quantity(0), cost(0), name{}, firm{}, country{}, type{tp}{};
+    product(string tp = ""):quantity{}, cost{}, name{}, firm{}, country{}, type{tp}{};
     product(string tp, size_t q, float c, string n, string f, string cn) : 
         quantity(q), cost(c), name(n), firm(f), country(cn), type(tp){}
 
@@ -28,7 +28,7 @@ class product{
 
     virtual ostream& print_Info(ostream &ost);
 
-    virtual float sell(size_t amount) = 0;
+    virtual size_t sell(size_t amount) = 0;
     virtual void add_to_storage(size_t amount) = 0;
 };
 }
