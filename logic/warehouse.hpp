@@ -23,6 +23,10 @@ public:
   	void register_product(const string &cipher, const product_components &pr);
 
 	size_t sell_product(const string &cipher, const size_t num);
+
+	string get_report()const;
+
+	string missing_products()const;
 };
 
 } // namespace mgw

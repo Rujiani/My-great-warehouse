@@ -260,3 +260,73 @@ TEST_CASE("sell_product: Insufficient quantity") {
     wh.register_product("LOW", comp);
     REQUIRE_THROWS_AS(wh.sell_product("LOW", 3), std::invalid_argument);
 }
+
+TEST_CASE("Warehouse operations (integer money)") {
+    mgw::warehouse wh;
+
+    mgw::product_components pc_wh;
+    pc_wh.quantity = 10;
+    pc_wh.cost = 100;
+    pc_wh.num = 5;
+    pc_wh.name = "BulkWidget";
+    pc_wh.firm = "ACME";
+    pc_wh.country = "USA";
+    pc_wh.type = "wholesale";
+
+    mgw::product_components pc_r;
+    pc_r.quantity = 5;
+    pc_r.cost = 50;
+    pc_r.num = 20;
+    pc_r.name = "Widget";
+    pc_r.firm = "SomeFirm";
+    pc_r.country = "USA";
+    pc_r.type = "retail";
+
+    SECTION("Register wholesale") {
+        REQUIRE_NOTHROW(wh.register_product("W1", pc_wh));
+        REQUIRE(wh.sell_product("W1", 1) == (1 * pc_wh.cost * pc_wh.num));
+    }
+
+    SECTION("Register retail") {
+        REQUIRE_NOTHROW(wh.register_product("R1", pc_r));
+        REQUIRE(wh.sell_product("R1", 2) == ((2 * pc_r.cost * pc_r.num) / 100));
+    }
+
+    SECTION("Re-register same product") {
+        wh.register_product("R2", pc_r);
+        mgw::product_components pc_r2 = pc_r;
+        pc_r2.quantity = 3;
+        REQUIRE_NOTHROW(wh.register_product("R2", pc_r2));
+        REQUIRE(wh.sell_product("R2", 8) > 0);
+        REQUIRE_THROWS_AS(wh.sell_product("R2", 1), std::invalid_argument);
+    }
+
+    SECTION("Invalid product type") {
+        mgw::product_components invalid_type = pc_r;
+        invalid_type.type = "unknown";
+        REQUIRE_THROWS_AS(wh.register_product("X1", invalid_type), std::invalid_argument);
+    }
+
+    SECTION("Selling unknown product") {
+        REQUIRE_THROWS_AS(wh.sell_product("Unknown", 5), std::invalid_argument);
+    }
+
+    SECTION("get_report") {
+        wh.register_product("W1", pc_wh);
+        wh.register_product("R1", pc_r);
+        std::string report = wh.get_report();
+        REQUIRE(report.find("BulkWidget") != std::string::npos);
+        REQUIRE(report.find("Widget") != std::string::npos);
+    }
+
+    SECTION("missing_products") {
+        wh.register_product("R1", pc_r);
+        mgw::product_components pc_zero = pc_r;
+        pc_zero.quantity = 0;
+        pc_zero.name = "Emptywidget";
+        wh.register_product("R2", pc_zero);
+        std::string missing = wh.missing_products();
+        REQUIRE(missing.find("Emptywidget") != std::string::npos);
+        REQUIRE(missing.find("Widget") == std::string::npos);
+    }
+}

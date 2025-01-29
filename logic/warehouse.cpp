@@ -2,6 +2,7 @@
 #include "../products/wholesale_product.hpp"
 #include "../products/retail_product.hpp"
 #include <stdexcept>
+#include <algorithm>
 
 namespace mgw {
 
@@ -32,6 +33,24 @@ size_t warehouse::sell_product(const string &cipher, const size_t num) {
 		return (*pos).second->sell(num);
 	else
 		throw std::invalid_argument("Error: No such product");
+}
+
+string warehouse::get_report()const{
+    string result;
+    for(auto &i : product_table){
+        result += (i.second->get_Info() + '\n');
+    }
+    return result;
+}
+
+string warehouse::missing_products()const{
+    string result;
+    std::for_each(product_table.begin(), product_table.end(), [&result](auto &x) {
+        if(x.second->get_quantity() == 0){
+            result += (x.second->get_name() + '\n');
+        }
+    });
+    return result;
 }
 
 }
