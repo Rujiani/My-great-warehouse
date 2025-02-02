@@ -82,10 +82,6 @@ private:
     }
 
 public:
-    /////////////////////////
-    // Iterators
-    /////////////////////////
-
     /**
      * @brief Const bidirectional iterator for HashMap.
      *
@@ -308,10 +304,6 @@ public:
         friend class HashMap;
     };
 
-    /////////////////////////
-    // Constructors, Destructor, and Assignment Operators
-    /////////////////////////
-
     /**
      * @brief Constructs an empty HashMap with an initial bucket capacity and load factor threshold.
      *
@@ -444,10 +436,6 @@ public:
         std::swap(hashFunc, other.hashFunc);
         std::swap(max_load, other.max_load);
     }
-
-    /////////////////////////
-    // Main Interface Methods
-    /////////////////////////
 
     /**
      * @brief Clears the HashMap.
