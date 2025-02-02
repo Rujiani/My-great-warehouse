@@ -4,7 +4,7 @@
 #include "../products/product.hpp"
 #include <memory>
 #include <string>
-#include <unordered_map>
+#include "../container/unordered_map.hpp"
 
 using std::string;
 
@@ -29,7 +29,7 @@ struct product_components {
  * @brief Represents a warehouse that manages a collection of products.
  */
 class warehouse {
-    std::unordered_map<string, std::shared_ptr<product>> product_table; ///< Storage for products, mapped by their cipher.
+    mgc::HashMap<string, std::shared_ptr<product>> product_table; ///< Storage for products, mapped by their cipher.
 
 public:
     /**
