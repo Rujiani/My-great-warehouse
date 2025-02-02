@@ -1,5 +1,5 @@
-#ifndef HASHMAP_HPP
-#define HASHMAP_HPP
+#ifndef UNORDERED_MAP_HPP_
+#define UNORDERED_MAP_HPP_
 
 #include <functional>   // for std::hash
 #include <stdexcept>    // for std::out_of_range
@@ -652,4 +652,4 @@ public:
 };
 
 }
-#endif // HASHMAP_HPP
+#endif // UNORDERED_MAP_HPP_
