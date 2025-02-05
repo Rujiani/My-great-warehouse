@@ -3,6 +3,7 @@
 #include "../products/retail_product.hpp"
 #include <stdexcept>
 #include <algorithm>
+#include <execution>
 
 namespace mgw {
 
@@ -45,7 +46,7 @@ string warehouse::get_report()const{
 
 string warehouse::missing_products()const{
     string result;
-    std::for_each(product_table.begin(), product_table.end(), [&result](auto &x) {
+    std::for_each(std::execution::par, product_table.begin(), product_table.end(), [&result](auto &x) {
         if(x.second->get_quantity() == 0){
             result += (x.second->get_name() + '\n');
         }
